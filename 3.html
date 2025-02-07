@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Business Card Templates</title>
+  <style>
+    /* Reset and Base Styles */
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #fff;
+      color: #000;
+      line-height: 1.6;
+    }
+    .container {
+      max-width: 960px;
+      margin: auto;
+      padding: 20px;
+    }
+    header, nav, section, footer {
+      margin-bottom: 20px;
+    }
+    header {
+      background: #000;
+      color: #fff;
+      padding: 20px;
+      text-align: center;
+    }
+    nav a {
+      color: #fff;
+      margin: 0 10px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    .accent {
+      color: #007BFF; /* Accent color */
+    }
+    .hidden {
+      display: none;
+    }
+    .form-group {
+      margin-bottom: 15px;
+    }
+    input[type="text"],
+    input[type="email"],
+    input[type="password"] {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      box-sizing: border-box;
+    }
+    button {
+      background-color: #007BFF;
+      color: #fff;
+      border: none;
+      padding: 10px 15px;
+      cursor: pointer;
+      font-size: 1em;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+    .product {
+      border: 1px solid #ccc;
+      padding: 15px;
+      margin-bottom: 15px;
+      text-align: center;
+    }
+    .product img {
+      max-width: 100%;
+      height: auto;
+      margin-bottom: 10px;
+    }
+    /* Responsive Styles */
+    @media (max-width: 600px) {
+      header, nav, section, footer {
+        padding: 10px;
+      }
+      button {
+        width: 100%;
+        margin-bottom: 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header and Navigation -->
+  <header>
+    <h1>Business Card Templates</h1>
+    <nav>
+      <a href="#" id="nav-login">Login</a>
+      <a href="#" id="nav-signup">Sign Up</a>
+      <a href="#" id="nav-logout" class="hidden">Logout</a>
+    </nav>
+  </header>
+
+  <div class="container">
+    <!-- Login Section -->
+    <section id="login-section">
+      <h2>Login</h2>
+      <div class="form-group">
+        <label for="login-email">Email:</label>
+        <input type="email" id="login-email" required />
+      </div>
+      <div class="form-group">
+        <label for="login-password">Password:</label>
+        <input type="password" id="login-password" required />
+      </div>
+      <button id="login-btn">Login</button>
+      <p>
+        Don't have an account?
+        <a href="#" id="switch-to-signup">Sign Up</a>
+      </p>
+    </section>
+
+    <!-- Sign Up Section -->
+    <section id="signup-section" class="hidden">
+      <h2>Sign Up</h2>
+      <div class="form-group">
+        <label for="signup-name">Name:</label>
+        <input type="text" id="signup-name" required />
+      </div>
+      <div class="form-group">
+        <label for="signup-email">Email:</label>
+        <input type="email" id="signup-email" required />
+      </div>
+      <div class="form-group">
+        <label for="signup-password">Password:</label>
+        <input type="password" id="signup-password" required />
+      </div>
+      <button id="signup-btn">Sign Up</button>
+      <p>
+        Already have an account?
+        <a href="#" id="switch-to-login">Login</a>
+      </p>
+    </section>
+    <!-- Product Listing Section -->
+    <section id="products-section" class="hidden">
+        <h2>Placing Orders is now free!!!</h2>
+      <div id="products-list">
+        <!-- Sample Product 1 -->
+        <div class="product" data-product-id="1" data-product-name="Minimalist Black">
+          <h3>Minimalist Black</h3>
+            
+          <p>A sleek and modern black design.</p>
+          <button class="order-btn">Order Now</button>
+        </div>
+        <!-- Sample Product 2 -->
+      
+      </div>
+    </section>
+
+    <!-- Order Confirmation Section -->
+    <section id="order-confirmation-section" class="hidden">
+      <h2>Thank you for your patience!</h2>
+      <p>We will call you in less than 24 hours.</p>
+    </section>
+
+    <!-- Hidden Order Form for FormSubmit Integration -->
+    <form
+      id="order-form"
+      action="https://formsubmit.co/jindalarchit70@gmail.com"
+      method="POST"
+      class="hidden"
+    >
+      <!-- Replace YOUR_EMAIL@example.com with your actual email address -->
+      <input type="hidden" name="_subject" value="New Business Card Order" />
+      <input type="hidden" name="userName" id="order-userName" />
+      <input type="hidden" name="userEmail" id="order-userEmail" />
+      <input type="hidden" name="productName" id="order-productName" />
+      <!-- Optional: Redirect after submission -->
+      <input type="hidden" name="_next" value="https://yourdomain.com/thankyou.html" />
+    </form>
+  </div>
+
+  <script>
+    /***********************
+     * Basic Authentication
+     * (Demo purposes only – using localStorage. In a real app, use a secure backend.)
+     ***********************/
+    let currentUser = null;
+
+    // Function to show a section and hide others
+    function showSection(sectionId) {
+      const sections = [
+        "login-section",
+        "signup-section",
+        "products-section",
+        "order-confirmation-section",
+      ];
+      sections.forEach((id) => {
+        document.getElementById(id).classList.add("hidden");
+      });
+      document.getElementById(sectionId).classList.remove("hidden");
+    }
+
+    // Update navigation links based on user login state
+    function updateNav() {
+      if (currentUser) {
+        document.getElementById("nav-login").classList.add("hidden");
+        document.getElementById("nav-signup").classList.add("hidden");
+        document.getElementById("nav-logout").classList.remove("hidden");
+      } else {
+        document.getElementById("nav-login").classList.remove("hidden");
+        document.getElementById("nav-signup").classList.remove("hidden");
+        document.getElementById("nav-logout").classList.add("hidden");
+      }
+    }
+
+    // Navigation Event Listeners
+    document.getElementById("nav-login").addEventListener("click", (e) => {
+      e.preventDefault();
+      showSection("login-section");
+    });
+    document.getElementById("nav-signup").addEventListener("click", (e) => {
+      e.preventDefault();
+      showSection("signup-section");
+    });
+    document.getElementById("nav-logout").addEventListener("click", (e) => {
+      e.preventDefault();
+      currentUser = null;
+      alert("Logged out successfully!");
+      updateNav();
+      showSection("login-section");
+    });
+
+    // Toggle between Login and Sign Up forms
+    document
+      .getElementById("switch-to-signup")
+      .addEventListener("click", (e) => {
+        e.preventDefault();
+        showSection("signup-section");
+      });
+    document
+      .getElementById("switch-to-login")
+      .addEventListener("click", (e) => {
+        e.preventDefault();
+        showSection("login-section");
+      });
+
+    // Sign Up Event
+    document.getElementById("signup-btn").addEventListener("click", () => {
+      const name = document.getElementById("signup-name").value.trim();
+      const email = document.getElementById("signup-email").value.trim();
+      const password = document.getElementById("signup-password").value.trim();
+
+      if (!name || !email || !password) {
+        alert("Please fill in all fields.");
+        return;
+      }
+      // Save user info to localStorage (for demo only)
+      const user = { name, email, password };
+      localStorage.setItem(email, JSON.stringify(user));
+      alert("Sign up successful! Please log in.");
+      showSection("login-section");
+    });
+
+    // Login Event
+    document.getElementById("login-btn").addEventListener("click", () => {
+      const email = document.getElementById("login-email").value.trim();
+      const password = document.getElementById("login-password").value.trim();
+
+      if (!email || !password) {
+        alert("Please fill in all fields.");
+        return;
+      }
+      const storedUser = localStorage.getItem(email);
+      if (storedUser) {
+        const user = JSON.parse(storedUser);
+        if (user.password === password) {
+          currentUser = user;
+          alert("Login successful!");
+          updateNav();
+          showSection("products-section");
+        } else {
+          alert("Incorrect password.");
+        }
+      } else {
+        alert("User not found. Please sign up.");
+      }
+    });
+
+    /***********************
+     * Order Process
+     ***********************/
+    // Add event listeners for each "Order Now" button
+    document.querySelectorAll(".order-btn").forEach((button) => {
+      button.addEventListener("click", (e) => {
+        // If not logged in, prompt the user to log in first.
+        if (!currentUser) {
+          alert("Please log in to place an order.");
+          showSection("login-section");
+          return;
+        }
+        // Get product information from the data attributes
+        const productElem = e.target.closest(".product");
+        const productName = productElem.getAttribute("data-product-name");
+
+        // Populate the hidden order form with user and product details
+        document.getElementById("order-userName").value = currentUser.name;
+        document.getElementById("order-userEmail").value = currentUser.email;
+        document.getElementById("order-productName").value = productName;
+
+        // Submit the form using FormSubmit (this sends an email in the background)
+        document.getElementById("order-form").submit();
+
+        // Show the order confirmation message
+        showSection("order-confirmation-section");
+      });
+    });
+  </script>
+</body>
+</html>
